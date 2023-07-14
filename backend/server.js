@@ -8,14 +8,13 @@ const postRouter = require("./router/postRouter");
 const commentRouter = require("./router/commentRouter");
 require("dotenv").config();
 
-const PORT = 5000;
-
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://localhost:5000",
       "http://192.168.0.104:5173",
       // "https://v-media-social.netlify.app",
     ],
@@ -23,6 +22,10 @@ app.use(
     credentials: true,
   })
 );
+app.post('/', (req, res) => {
+  // Handle the POST request to the root URL
+  res.send('POST request received');
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
@@ -36,7 +39,7 @@ DbConnect()
     console.log(`${connection.host}`);
   })
   .then(() => {
-    app.listen(PORT, () => {
+    app.listen(5000, () => {
       console.log("server is running on Port 5000");
     });
   })
